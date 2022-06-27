@@ -9,9 +9,35 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('')
   const [thumbnail, setThumbnail] = useState(null);
+  const [thumbnailError, setThumbnailError] = useState(null);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(displayName, email, password, thumbnail);
+  }
+
+  const handleFileChange = (e) => {
+    setThumbnail(null);
+    let selected = e.target.files[0];
+    console.log(selected);
+
+    if (!selected) {
+      setThumbnailError('Please select a file for profile picture');
+      return;
+    }
+    if (!selected.type.includes('image')) {
+      setThumbnailError('Please insert image file (png/jpg)');
+      return;
+    }
+    if (selected.size > 100000) {
+      setThumbnailError('Please insert image file size under 100 kb');
+      return;
+    }
+    setThumbnailError(null);
+    setThumbnail(selected);
+  }
   return (
-    <form className='auth-form'>
+    <form className='auth-form' onSubmit={handleSubmit}>
       <h2>Sign Up</h2>
       <label>
         <span>Display Name:</span>
@@ -45,7 +71,9 @@ const Signup = () => {
         <input
           required
           type='file'
+          onChange={handleFileChange}
         />
+        {thumbnailError && <div className='error'>{thumbnailError}</div>}
       </label>
       <button className='btn'>Sign Up</button>
     </form>
