@@ -33,12 +33,13 @@ export const useLogout = () => {
       if (!isCancelled) {
         console.log(err.message);
         setError(err.message);
-        isPending(false);
+        setIsPending(false);
       }
     }
   }
 
   useEffect(() => {
+    setIsCancelled(false);
     return () => setIsCancelled(true);
   }, []);
 
