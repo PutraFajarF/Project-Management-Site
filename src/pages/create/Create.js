@@ -22,6 +22,7 @@ const Create = () => {
   const [dueDate, setDueDate] = useState('');
   const [category, setCategory] = useState('');
   const [assignedUsers, setAssignedUsers] = useState([]);
+  const [formError, setFromError] = useState(null);
 
   useEffect(() => {
     if (documents) {
@@ -34,6 +35,16 @@ const Create = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setFromError(null);
+    if (!category) {
+      setFromError('Please select a project category!');
+      return;
+    }
+    // array is a value so we cant use '!' conditional statement directly
+    if (assignedUsers.length < 1) {
+      setFromError('Please assign the project to the user!');
+      return
+    }
     console.log(name, details, dueDate, category.value, assignedUsers);
   }
   return (
@@ -83,6 +94,7 @@ const Create = () => {
           />
         </label>
         <button className="btn">Add Project</button>
+        {formError && <p className='error'>{formError}</p>}
       </form>
     </div>
   )
