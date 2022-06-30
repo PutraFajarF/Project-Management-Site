@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { projectFirestore } from "../firebase/config";
 
+// to set up realtime listener to a specific document
 export const useDocument = (collection, id) => {
   const [document, setDocument] = useState(null);
   const [error, setError] = useState(null);
