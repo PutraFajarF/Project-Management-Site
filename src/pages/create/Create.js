@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useCollection } from '../../hooks/useCollection';
 import { timestamp } from '../../firebase/config';
 import { useAuthContext } from '../../hooks/useAuthContext';
+import { useFirestore } from '../../hooks/useFirestore';
+import { useNavigate } from 'react-router-dom';
 import Select from 'react-select';
 
 // styles
@@ -15,9 +17,11 @@ const categories = [
 ];
 
 const Create = () => {
+  const { addDocument, response } = useFirestore('projects');
   const { documents } = useCollection('users');
   const [users, setUsers] = useState([]);
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   // form field values
   const [name, setName] = useState('');
@@ -36,7 +40,7 @@ const Create = () => {
     }
   },[documents]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setFromError(null);
     if (!category) {
@@ -68,7 +72,10 @@ const Create = () => {
       createdBy,
       assignedUsersList
     }
-    console.log(project);
+    await addDocument(project);
+    if (!response.error) {
+      navigate('/');
+    }
   }
   return (
     <div className='create-form'>
