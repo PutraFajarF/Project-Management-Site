@@ -3,6 +3,7 @@ import { useDocument } from '../../hooks/useDocument';
 
 // components
 import ProjectSummary from './ProjectSummary';
+import ProjectComments from './ProjectComments';
 
 // styles
 import './Project.css';
@@ -22,6 +23,7 @@ const Project = () => {
   return (
     <div className='project-details'>
       <ProjectSummary project={document} />
+      <ProjectComments />
     </div>
   )
 };
