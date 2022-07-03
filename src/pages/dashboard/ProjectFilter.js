@@ -1,5 +1,5 @@
 
-const filterList = ['All', 'Mine', 'Development', 'Design', 'Marketing', 'Sales']
+const filterList = ['all', 'mine', 'development', 'design', 'marketing', 'sales']
 
 const ProjectFilter = ({ currentFilter, changeFilter }) => {
 
